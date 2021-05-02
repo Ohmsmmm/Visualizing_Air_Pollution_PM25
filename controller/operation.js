@@ -163,7 +163,7 @@ class handle {
                 var command = "SELECT[country], [city], [Year], [pm25],[geom] FROM SpatialDB.dbo.AirPollutionPM25 WHERE Year = '2015' AND pm25 > 50";
                 var result = await request.query(command);
                 console.log(result)
-                WriteExcel(colum,result)
+                WriteExcel(colum,result,"Q4a")
 
                 console.log(result.recordset);
 
@@ -195,7 +195,7 @@ class handle {
                 var command = "SELECT	AVG(pm25) AS pm25AVG,[country] FROM SpatialDB.dbo.AirPollutionPM25 GROUP BY country ORDER BY pm25AVG DESC";
                 var result = await request.query(command);
                 console.log(result)
-                WriteExcel(colum,result)
+                WriteExcel(colum,result,"Q4B")
 
                 console.log(result.recordset);
 
@@ -228,7 +228,7 @@ class handle {
                 var command = `SELECT	AVG(pm25) AS pm25AVG, [Year] FROM SpatialDB.dbo.AirPollutionPM25 WHERE country = '${country}' GROUP BY Year ORDER BY Year`;                
                 var result = await request.query(command);
                 console.log(result)
-                WriteExcel(colum,result)
+                WriteExcel(colum,result,"Q4C")
 
                 console.log(result.recordset);
 
@@ -262,7 +262,7 @@ class handle {
                 var command = `SELECT	SUM(population) AS affectedPopulation FROM SpatialDB.dbo.AirPollutionPM25 WHERE year = '${year}' AND color_pm25 = '${color_pm25}' `;
                 var result = await request.query(command);
                 console.log(result)
-                WriteExcel(colum,result)
+                WriteExcel(colum,result,"Q4D")
 
                 console.log(result.recordset);
 
