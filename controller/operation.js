@@ -6,7 +6,7 @@ const config = {
     user: "sa",
     password: "1234",
     server: "localhost",
-    database: "AirPollutionPM25",
+    database: "SpatialDB",
     options: {
       encrypt: false,
       enableArithAbort: true,
@@ -27,7 +27,7 @@ class handle {
         return new Promise(async function (resolve, reject) {
             try {
                 var request = await new sql.Request();
-                var command = (`SELECT * FROM AirPollutionPM25.dbo.AirPollutionPM25`)
+                var command = (`SELECT * FROM SpatialDB.dbo.AirPollutionPM25`)
                 var result = await request.query(command);
                 console.log(result)
 
@@ -76,7 +76,7 @@ class handle {
                     data = data.replace("]", ")");
                     console.log(data)
 
-                    var command = (`INSERT INTO AirPollutionPM25.dbo.AirPollutionPM25([country],[city],[Year],[pm25],[latitude],[longitude],[population],[wbinc16_text],[Region],[conc_pm25],[color_pm25]) VALUES ${data} ` )               
+                    var command = (`INSERT INTO SpatialDB.dbo.AirPollutionPM25([country],[city],[Year],[pm25],[latitude],[longitude],[population],[wbinc16_text],[Region],[conc_pm25],[color_pm25]) VALUES ${data} ` )               
                     var result = await request.query(command);
 
                 }
@@ -105,7 +105,7 @@ class handle {
         return new Promise(async function (resolve, reject) {
             try {
                 var request = await new sql.Request();
-                var command = (`ALTER TABLE AirPollutionPM25.dbo.AirPollutionPM25
+                var command = (`ALTER TABLE SpatialDB.dbo.AirPollutionPM25
                 ADD geom AS geography::Point(latitude , longitude,4326);`)               
                 var result = await request.query(command);
                 console.log(result)
@@ -130,7 +130,7 @@ class handle {
         return new Promise(async function (resolve, reject) {
             try {
                 var request = await new sql.Request();
-                var command = (`DELETE FROM AirPollutionPM25.dbo.AirPollutionPM25`)               
+                var command = (`DELETE FROM SpatialDB.dbo.AirPollutionPM25`)               
                 var result = await request.query(command);
                 console.log(result)
 
@@ -160,8 +160,7 @@ class handle {
                     { header: 'pm25', key: 'pm25' },
                     { header: 'geom', key: 'geom' }
                   ]
-                // , [geom]                                                         //เปลี่ยนด้วยไอเหี้ย                                                                   
-                var command = "SELECT[country], [city], [Year], [pm25] FROM AirPollutionPM25.dbo.AirPollutionPM25 WHERE Year = '2015' AND pm25 > 50";
+                var command = "SELECT[country], [city], [Year], [pm25],[geom] FROM SpatialDB.dbo.AirPollutionPM25 WHERE Year = '2015' AND pm25 > 50";
                 var result = await request.query(command);
                 console.log(result)
                 WriteExcel(colum,result)
@@ -193,8 +192,7 @@ class handle {
                     { header: 'pm25AVG', key: 'pm25AVG' },
                     { header: 'country', key: 'country' }
                   ]
-                // , [geom]                                                       
-                var command = "SELECT	AVG(pm25) AS pm25AVG,[country] FROM AirPollutionPM25.dbo.AirPollutionPM25 GROUP BY country ORDER BY pm25AVG DESC";
+                var command = "SELECT	AVG(pm25) AS pm25AVG,[country] FROM SpatialDB.dbo.AirPollutionPM25 GROUP BY country ORDER BY pm25AVG DESC";
                 var result = await request.query(command);
                 console.log(result)
                 WriteExcel(colum,result)
@@ -218,7 +216,7 @@ class handle {
         })
     }
 
-    async Query4C() {
+    async Query4C(reg) {
         return new Promise(async function (resolve, reject) {
             try {
                 var request = await new sql.Request();
@@ -226,8 +224,8 @@ class handle {
                     { header: 'pm25AVG', key: 'pm25AVG' },
                     { header: 'Year', key: 'Year' }
                   ]
-                // , [geom]                                                        
-                var command = "SELECT	AVG(pm25) AS pm25AVG, [Year] FROM AirPollutionPM25.dbo.AirPollutionPM25 WHERE country = 'France' GROUP BY Year ORDER BY pm25AVG DESC";                
+                  var country = reg.country
+                var command = `SELECT	AVG(pm25) AS pm25AVG, [Year] FROM SpatialDB.dbo.AirPollutionPM25 WHERE country = '${country}' GROUP BY Year ORDER BY Year`;                
                 var result = await request.query(command);
                 console.log(result)
                 WriteExcel(colum,result)
@@ -251,15 +249,17 @@ class handle {
         })
     }
 
-    async Query4D() {
+    async Query4D(reg) {
         return new Promise(async function (resolve, reject) {
             try {
                 var request = await new sql.Request();
                 var colum = [
                     { header: 'affectedPopulation', key: 'affectedPopulation' }
                   ]
-                // , [geom]                                                
-                var command = "SELECT	SUM(population) AS affectedPopulation FROM AirPollutionPM25.dbo.AirPollutionPM25 WHERE year = '2015' AND color_pm25 = 'yellow'";
+                // , [geom]     
+                var year = reg.year
+                var color_pm25 = reg.color_pm25                                            
+                var command = `SELECT	SUM(population) AS affectedPopulation FROM SpatialDB.dbo.AirPollutionPM25 WHERE year = '${year}' AND color_pm25 = '${color_pm25}' `;
                 var result = await request.query(command);
                 console.log(result)
                 WriteExcel(colum,result)
@@ -267,6 +267,163 @@ class handle {
                 console.log(result.recordset);
 
 
+
+                let message = {
+                    statusCode: 200,
+                    message: result.recordset
+                }
+                resolve(message)
+            } catch (error) {
+                let messageError = {
+                    statusCode: error.statusCode || 400,
+                    message: error.message 
+                }
+                reject(messageError)
+            }
+        })
+    }
+
+
+    async Query5A(reg) {
+        return new Promise(async function (resolve, reject) {
+            try {
+                var request = await new sql.Request();
+                var year = reg.year
+                var command = `SELECT [country], [city], [latitude], [longitude], [Year]
+                FROM SpatialDB.dbo.AirPollutionPM25
+                WHERE Year = '${year}' `;
+                var result = await request.query(command);
+                console.log(result)
+                console.log(result.recordset);
+
+
+
+                let message = {
+                    statusCode: 200,
+                    message: result.recordset
+                }
+                resolve(message)
+            } catch (error) {
+                let messageError = {
+                    statusCode: error.statusCode || 400,
+                    message: error.message 
+                }
+                reject(messageError)
+            }
+        })
+    }
+
+    async Query5B() {
+        return new Promise(async function (resolve, reject) {
+            try {
+                var request = await new sql.Request();
+                
+                var command = `DECLARE @Point GEOGRAPHY
+                SELECT  @Point = geom
+                FROM SpatialDB.dbo.AirPollutionPM25
+                WHERE city = 'Bangkok'
+                 
+                SELECT DISTINCT TOP 50 [city], [latitude], [longitude], geom.MakeValid().STDistance(@Point) AS Distance
+                From SpatialDB.dbo.AirPollutionPM25
+                Order by Distance ASC `;
+                var result = await request.query(command);
+                console.log(result)
+
+                console.log(result.recordset);
+
+
+
+                let message = {
+                    statusCode: 200,
+                    message: result.recordset
+                }
+                resolve(message)
+            } catch (error) {
+                let messageError = {
+                    statusCode: error.statusCode || 400,
+                    message: error.message 
+                }
+                reject(messageError)
+            }
+        })
+    }
+
+    async Query5C() {
+        return new Promise(async function (resolve, reject) {
+            try {
+                var request = await new sql.Request();
+                
+                var command = `SELECT [city], [latitude], [longitude], [country], [Year]
+                FROM SpatialDB.dbo.AirPollutionPM25
+                WHERE  [country] in (
+                    SELECT w1.NAME AS "Neighbors of Thailand" 
+                    FROM [SpatialDB].[dbo].[world] w1, [SpatialDB].[dbo].[world] w2
+                    WHERE w2.geom.MakeValid().STTouches(w1.geom.MakeValid())=1 and w2.NAME = 'Thailand') `;
+                var result = await request.query(command);
+                console.log(result)
+
+                console.log(result.recordset);
+
+                let message = {
+                    statusCode: 200,
+                    message: result.recordset
+                }
+                resolve(message)
+            } catch (error) {
+                let messageError = {
+                    statusCode: error.statusCode || 400,
+                    message: error.message 
+                }
+                reject(messageError)
+            }
+        })
+    }
+
+    async Query5E() {
+        return new Promise(async function (resolve, reject) {
+            try {
+                var request = await new sql.Request();
+                
+                var command = `SELECT [country], [longitude], [country], [city]
+                FROM SpatialDB.dbo.AirPollutionPM25
+                WHERE [country] in (
+                    SELECT top 1 country
+                    FROM SpatialDB.dbo.AirPollutionPM25 
+                    WHERE [Year] = 2015
+                    GROUP BY country
+                    ORDER BY COUNT(city) DESC) `;
+                var result = await request.query(command);
+                console.log(result)
+
+                console.log(result.recordset);
+
+                let message = {
+                    statusCode: 200,
+                    message: result.recordset
+                }
+                resolve(message)
+            } catch (error) {
+                let messageError = {
+                    statusCode: error.statusCode || 400,
+                    message: error.message 
+                }
+                reject(messageError)
+            }
+        })
+    }
+
+    async Query5F(reg) {
+        return new Promise(async function (resolve, reject) {
+            try {
+                var request = await new sql.Request();
+                var year = reg.year
+                var command = `SELECT [latitude], [longitude], [country], [city]
+                FROM SpatialDB.dbo.AirPollutionPM25
+                WHERE wbinc16_text = 'Lower middle income' AND [Year] = '${year}' `;
+                var result = await request.query(command);
+                console.log(result)
+
+                console.log(result.recordset);
 
                 let message = {
                     statusCode: 200,
