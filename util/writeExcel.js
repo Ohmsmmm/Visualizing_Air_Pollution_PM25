@@ -1,4 +1,4 @@
-function WriteExcel(execlColum,result) {
+function WriteExcel(execlColum,result,name) {
     
     const Excel = require('exceljs')
     let workbook = new Excel.Workbook()
@@ -20,7 +20,7 @@ function WriteExcel(execlColum,result) {
           })
         })
       }
-      workbook.xlsx.writeFile('./output/test.xlsx')
+      workbook.xlsx.writeFile(`./output/${name}.xlsx`)
 
   }
   module.exports = WriteExcel

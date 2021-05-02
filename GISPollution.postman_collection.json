@@ -1,0 +1,261 @@
+{
+	"info": {
+		"_postman_id": "d278f8c5-0d79-4898-8c83-0d66a5964a1d",
+		"name": "GISPollution",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:3000/ImportExcel",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/ImportExcel",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"ImportExcel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/AddGeom",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/AddGeom",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"AddGeom"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/QueryAll",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/QueryAll",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"QueryAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/DeleteAll",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/DeleteAll",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"DeleteAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/Query4A",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/Query4A",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Query4A"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/Query4B",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/Query4B",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Query4B"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/Query4C",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"country\" : \"France\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/Query4C",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Query4C"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/Query4D",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"year\" : \"2015\",\r\n    \"color_pm25\" :\"yellow\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/Query4D",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Query4D"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/Query5A",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"year\" :2015\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/Query5A",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Query5A"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/Query5B",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/Query5B",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Query5B"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/Query5C",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/Query5C",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Query5C"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/Query5F",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"year\":\"2015\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/Query5F",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Query5F"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
