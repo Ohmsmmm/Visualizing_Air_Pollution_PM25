@@ -20,7 +20,7 @@ module.exports = function (app) {
 
     app.post('/ImportExcel', async (req, res) => {
         try {
-            var result = (await new handle().ImportExcel(req.body))
+            var result = (await new handle().ImportExcel())
             res.status(200)
             res.json(result)
         } catch (error) {
