@@ -20,7 +20,7 @@ module.exports = function (app) {
 
     app.post('/ImportExcel', async (req, res) => {
         try {
-            var result = (await new handle().ImportExcel(req.body))
+            var result = (await new handle().ImportExcel())
             res.status(200)
             res.json(result)
         } catch (error) {
@@ -36,7 +36,7 @@ module.exports = function (app) {
 
     app.post('/AddGeom', async (req, res) => {
         try {
-            var result = (await new handle().AddGeom(req.body))
+            var result = (await new handle().AddGeom())
             res.status(200)
             res.json(result)
         } catch (error) {
@@ -52,7 +52,7 @@ module.exports = function (app) {
 
     app.post('/DeleteAll', async (req, res) => {
         try {
-            var result = (await new handle().DeleteAll(req.body))
+            var result = (await new handle().DeleteAll())
             res.status(200)
             res.json(result)
         } catch (error) {
@@ -70,7 +70,7 @@ module.exports = function (app) {
 
     app.post('/Query4A', async (req, res) => {
         try {
-            var result = (await new handle().Query4A(req.body))
+            var result = (await new handle().Query4A())
             res.status(200)
             res.json(result)
         } catch (error) {
@@ -86,7 +86,7 @@ module.exports = function (app) {
 
     app.post('/Query4B', async (req, res) => {
         try {
-            var result = (await new handle().Query4B(req.body))
+            var result = (await new handle().Query4B())
             res.status(200)
             res.json(result)
         } catch (error) {
@@ -150,7 +150,7 @@ module.exports = function (app) {
 
     app.post('/Query5B', async (req, res) => {
         try {
-            var result = (await new handle().Query5B(req.body))
+            var result = (await new handle().Query5B())
             res.status(200)
             res.json(result)
         } catch (error) {
@@ -166,7 +166,23 @@ module.exports = function (app) {
 
     app.post('/Query5C', async (req, res) => {
         try {
-            var result = (await new handle().Query5C(req.body))
+            var result = (await new handle().Query5C())
+            res.status(200)
+            res.json(result)
+        } catch (error) {
+            let messageError = {
+                statusCode: error.statusCode || 400,
+                message: error.message || error
+            }
+
+            res.status(messageError.statusCode)
+            res.json(messageError)
+        }
+    })
+
+    app.post('/Query5D', async (req, res) => {
+        try {
+            var result = (await new handle().Query5D())
             res.status(200)
             res.json(result)
         } catch (error) {
@@ -182,7 +198,7 @@ module.exports = function (app) {
 
     app.post('/Query5E', async (req, res) => {
         try {
-            var result = (await new handle().Query5E(req.body))
+            var result = (await new handle().Query5E())
             res.status(200)
             res.json(result)
         } catch (error) {

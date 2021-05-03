@@ -257,7 +257,7 @@ class handle {
                     { header: 'affectedPopulation', key: 'affectedPopulation' }
                   ]
                 // , [geom]     
-                var year = reg.year
+                var year = parseFloat(reg.year)
                 var color_pm25 = reg.color_pm25                                            
                 var command = `SELECT	SUM(population) AS affectedPopulation FROM SpatialDB.dbo.AirPollutionPM25 WHERE year = '${year}' AND color_pm25 = '${color_pm25}' `;
                 var result = await request.query(command);
@@ -359,6 +359,35 @@ class handle {
                     SELECT w1.NAME AS "Neighbors of Thailand" 
                     FROM [SpatialDB].[dbo].[world] w1, [SpatialDB].[dbo].[world] w2
                     WHERE w2.geom.MakeValid().STTouches(w1.geom.MakeValid())=1 and w2.NAME = 'Thailand') `;
+                var result = await request.query(command);
+                console.log(result)
+
+                console.log(result.recordset);
+
+                let message = {
+                    statusCode: 200,
+                    message: result.recordset
+                }
+                resolve(message)
+            } catch (error) {
+                let messageError = {
+                    statusCode: error.statusCode || 400,
+                    message: error.message 
+                }
+                reject(messageError)
+            }
+        })
+    }
+
+    async Query5D() {
+        return new Promise(async function (resolve, reject) {
+            try {
+                var request = await new sql.Request();
+                
+                var command = `SELECT MAX([longitude]) AS max_long, MAX([latitude]) AS max_lat, MIN([longitude]) AS min_long, MIN([latitude]) AS min_lat
+                FROM SpatialDB.dbo.AirPollutionPM25
+                WHERE [Year] = '2009' AND [country] = 'Thailand'
+                GROUP BY [country], [Year] `;
                 var result = await request.query(command);
                 console.log(result)
 
