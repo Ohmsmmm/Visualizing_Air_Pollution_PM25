@@ -62,11 +62,12 @@ function genXlsQ4C(country) {
 	});
   };
 
-function genXlsQ4D(color) {
+function genXlsQ4D(color,year) {
 
-	$.post("http://localhost:3000/Query4C",
+	$.post("http://localhost:3000/Query4D",
 	{
-		color: color,
+		color_pm25: color,
+		year: year,
 	},
 	function(data, status){
 		console.log(data.message)
