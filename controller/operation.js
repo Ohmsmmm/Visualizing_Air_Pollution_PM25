@@ -379,6 +379,35 @@ class handle {
         })
     }
 
+    async Query5D() {
+        return new Promise(async function (resolve, reject) {
+            try {
+                var request = await new sql.Request();
+                
+                var command = `SELECT MAX([longitude]) AS max_long, MAX([latitude]) AS max_lat, MIN([longitude]) AS min_long, MIN([latitude]) AS min_lat
+                FROM SpatialDB.dbo.AirPollutionPM25
+                WHERE [Year] = '2009' AND [country] = 'Thailand'
+                GROUP BY [country], [Year] `;
+                var result = await request.query(command);
+                console.log(result)
+
+                console.log(result.recordset);
+
+                let message = {
+                    statusCode: 200,
+                    message: result.recordset
+                }
+                resolve(message)
+            } catch (error) {
+                let messageError = {
+                    statusCode: error.statusCode || 400,
+                    message: error.message 
+                }
+                reject(messageError)
+            }
+        })
+    }
+
     async Query5E() {
         return new Promise(async function (resolve, reject) {
             try {
