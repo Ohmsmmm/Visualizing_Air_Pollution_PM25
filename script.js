@@ -19,17 +19,62 @@ function sentFile() {
 			})
 	}
 }
-function genXlsQ() {
+function genXlsQ4A() {
 	let apiUrl = "http://localhost:3000/Query4A"
-	let text = document.getElementById('text-result-2')
 	axios.post(apiUrl)
 		.then((res) => {
-			text.innerHTML = "OK";
+
 		})
 		.catch((err) => {
-			text.innerHTML = err
 		})
 }
+function genXlsQ4B() {
+	let apiUrl = "http://localhost:3000/Query4B"
+	axios.post(apiUrl)
+		.then((res) => {
+
+		})
+		.catch((err) => {
+		})
+}
+
+// function genXlsQ4C(data) {
+// 	console.log("-----------------" + data)
+// 	let apiUrl = "http://localhost:3000/Query4C"
+
+// 	axios.post(apiUrl,data)
+// 		.then((res) => {
+// 		})
+// 		.catch((err) => {
+// 		})
+// }
+
+function genXlsQ4C(country) {
+
+	$.post("http://localhost:3000/Query4C",
+	{
+		country: country,
+	},
+	function(data, status){
+		console.log(data.message)
+	  alert("Status: " + status);
+
+	});
+  };
+
+function genXlsQ4D(color) {
+
+	$.post("http://localhost:3000/Query4C",
+	{
+		color: color,
+	},
+	function(data, status){
+		console.log(data.message)
+	  alert("Status: " + status);
+
+	});
+  };
+
 
 function getQuery_5a(year) {
 
