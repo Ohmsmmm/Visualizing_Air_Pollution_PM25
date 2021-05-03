@@ -4,7 +4,7 @@ const WriteExcel = require("../util/writeExcel");
 // config for your database
 const config = {
     user: "sa",
-    password: "Ohmsm55343",
+    password: "123456789",
     server: "localhost",
     database: "SpatialDB",
     options: {
@@ -229,7 +229,8 @@ class handle {
                 var result = await request.query(command);
                 console.log(result)
                 WriteExcel(colum,result,"Q4C")
-
+                console.log("------------------------------------------");
+                
                 console.log(result.recordset);
 
 
