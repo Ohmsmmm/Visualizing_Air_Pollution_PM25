@@ -410,6 +410,46 @@ class handle {
         })
     }
 
+    async Query5D() {
+        return new Promise(async function (resolve, reject) {
+            try {
+                var request = await new sql.Request();
+                
+                var command = `SELECT MAX([longitude]) AS max_long, MAX([latitude]) AS max_lat, MIN([longitude]) AS min_long, MIN([latitude]) AS min_lat
+                FROM SpatialDB.dbo.AirPollutionPM25
+                WHERE [Year] = '2015' AND [country] = 'Thailand'
+                GROUP BY [country], [Year] `;
+                var result = await request.query(command);
+                
+                var resultout = []
+
+                var max = {
+                    "latitude" : result.recordset[0].max_lat,
+                    "longitude": result.recordset[0].max_long
+                }
+                var min = {
+                    "latitude" : result.recordset[0].min_lat,
+                    "longitude": result.recordset[0].min_long
+                }
+                resultout.push(max)
+                resultout.push(min)
+                // console.log(resultout)
+
+                let message = {
+                    statusCode: 200,
+                    message: resultout
+                }
+                resolve(message)
+            } catch (error) {
+                let messageError = {
+                    statusCode: error.statusCode || 400,
+                    message: error.message 
+                }
+                reject(messageError)
+            }
+        })
+    }
+
     async Query5E() {
         return new Promise(async function (resolve, reject) {
             try {
@@ -443,6 +483,7 @@ class handle {
         })
     }
 
+    
     async Query5F(reg) {
         return new Promise(async function (resolve, reject) {
             try {
