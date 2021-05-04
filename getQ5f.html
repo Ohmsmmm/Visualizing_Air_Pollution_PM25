@@ -16,8 +16,8 @@
   <script src="https://js.arcgis.com/4.19/"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script>
-getQ5A(2015)
-function getQ5A(year) {
+getQ5F(2015)
+function getQ5F(year) {
 console.log(year)
 
   require([
@@ -50,12 +50,12 @@ console.log(year)
 
 
 	$.post(
-	  "http://localhost:3000/Query5A",
+	  "http://localhost:3000/Query5F",
 	  {
 		year: year,
 	  },
 	  function (data, status) {
-      // console.log(data.message.length)
+      console.log(data.message.length)
       for(var i = 0;i<= data.message.length;i++){
         // console.log(data.message[i].longitude);
 		    addpoint(data.message[i].longitude,data.message[i].latitude)
@@ -98,7 +98,7 @@ function addpoint(longitude,latitude){
 </head>
 <body>
   <input type="text"value = "" placeholder="Year" id="name-558c" name="name" class="u-border-1 u-border-grey-30 u-input u-input-rectangle1" required="">
-  <input onclick="getQ5A(document.getElementById('name-558c').value)" class="u-btn u-btn-submit u-button-style" type="submit" value="submit">
+  <input onclick="getQ5F(document.getElementById('name-558c').value)" class="u-btn u-btn-submit u-button-style" type="submit" value="submit">
   <div id="viewDiv"></div>
 </body>
 </html>
