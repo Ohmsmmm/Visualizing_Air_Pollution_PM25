@@ -288,6 +288,7 @@ class handle {
     async Query5A(reg) {
         return new Promise(async function (resolve, reject) {
             try {
+                console.log(reg.year)
                 var request = await new sql.Request();
                 var year = reg.year
                 var command = `SELECT [country], [city], [latitude], [longitude], [Year]
@@ -414,7 +415,7 @@ class handle {
             try {
                 var request = await new sql.Request();
                 
-                var command = `SELECT [country], [longitude], [country], [city]
+                var command = `SELECT [country], [latitude],[longitude], [country], [city]
                 FROM SpatialDB.dbo.AirPollutionPM25
                 WHERE [country] in (
                     SELECT top 1 country
