@@ -216,7 +216,7 @@ class handle {
         })
     }
 
-    async Query4C(reg) {
+    async Query4C(req) {
         return new Promise(async function (resolve, reject) {
             try {
                 var request = await new sql.Request();
@@ -224,7 +224,7 @@ class handle {
                     { header: 'pm25AVG', key: 'pm25AVG' },
                     { header: 'Year', key: 'Year' }
                   ]
-                  var country = reg.country
+                  var country = req.country
                 var command = `SELECT	AVG(pm25) AS pm25AVG, [Year] FROM SpatialDB.dbo.AirPollutionPM25 WHERE country = '${country}' GROUP BY Year ORDER BY Year`;                
                 var result = await request.query(command);
                 console.log(result)
@@ -249,7 +249,7 @@ class handle {
         })
     }
 
-    async Query4D(reg) {
+    async Query4D(req) {
         return new Promise(async function (resolve, reject) {
             try {
                 var request = await new sql.Request();
@@ -257,8 +257,8 @@ class handle {
                     { header: 'affectedPopulation', key: 'affectedPopulation' }
                   ]
                 // , [geom]     
-                var year = parseFloat(reg.year)
-                var color_pm25 = reg.color_pm25                                            
+                var year = parseFloat(req.year)
+                var color_pm25 = req.color_pm25                                            
                 var command = `SELECT	SUM(population) AS affectedPopulation FROM SpatialDB.dbo.AirPollutionPM25 WHERE year = '${year}' AND color_pm25 = '${color_pm25}' `;
                 var result = await request.query(command);
                 console.log(result)
@@ -284,11 +284,11 @@ class handle {
     }
 
 
-    async Query5A(reg) {
+    async Query5A(req) {
         return new Promise(async function (resolve, reject) {
             try {
                 var request = await new sql.Request();
-                var year = reg.year
+                var year = parseFloat(req.year)
                 var command = `SELECT [country], [city], [latitude], [longitude], [Year]
                 FROM SpatialDB.dbo.AirPollutionPM25
                 WHERE Year = '${year}' `;
@@ -441,11 +441,11 @@ class handle {
         })
     }
 
-    async Query5F(reg) {
+    async Query5F(req) {
         return new Promise(async function (resolve, reject) {
             try {
                 var request = await new sql.Request();
-                var year = reg.year
+                var year = parseFloat(req.year)
                 var command = `SELECT [latitude], [longitude], [country], [city]
                 FROM SpatialDB.dbo.AirPollutionPM25
                 WHERE wbinc16_text = 'Lower middle income' AND [Year] = '${year}' `;

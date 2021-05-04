@@ -44,7 +44,7 @@
 		{
 			"name": "localhost:3000/QueryAll",
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
 				"url": {
 					"raw": "localhost:3000/QueryAll",
@@ -80,7 +80,7 @@
 		{
 			"name": "localhost:3000/Query4A",
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
 				"url": {
 					"raw": "localhost:3000/Query4A",
@@ -98,7 +98,7 @@
 		{
 			"name": "localhost:3000/Query4B",
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
 				"url": {
 					"raw": "localhost:3000/Query4B",
@@ -115,12 +115,15 @@
 		},
 		{
 			"name": "localhost:3000/Query4C",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"country\" : \"France\"\r\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -128,13 +131,21 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:3000/Query4C",
+					"raw": "localhost:3000/Query4C/France",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
-						"Query4C"
+						"Query4C",
+						"France"
+					],
+					"query": [
+						{
+							"key": "\"",
+							"value": "",
+							"disabled": true
+						}
 					]
 				}
 			},
@@ -142,8 +153,11 @@
 		},
 		{
 			"name": "localhost:3000/Query4D",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
 				"body": {
 					"mode": "raw",
@@ -155,13 +169,15 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:3000/Query4D",
+					"raw": "localhost:3000/Query4D/2015/yellow",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
-						"Query4D"
+						"Query4D",
+						"2015",
+						"yellow"
 					]
 				}
 			},
@@ -169,8 +185,11 @@
 		},
 		{
 			"name": "localhost:3000/Query5A",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
 				"body": {
 					"mode": "raw",
@@ -182,13 +201,14 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:3000/Query5A",
+					"raw": "localhost:3000/Query5A/2015",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
-						"Query5A"
+						"Query5A",
+						"2015"
 					]
 				}
 			},
@@ -197,7 +217,7 @@
 		{
 			"name": "localhost:3000/Query5B",
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
 				"url": {
 					"raw": "localhost:3000/Query5B",
@@ -215,7 +235,7 @@
 		{
 			"name": "localhost:3000/Query5C",
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
 				"url": {
 					"raw": "localhost:3000/Query5C",
@@ -232,8 +252,11 @@
 		},
 		{
 			"name": "localhost:3000/Query5F",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
 				"body": {
 					"mode": "raw",
@@ -245,13 +268,14 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:3000/Query5F",
+					"raw": "localhost:3000/Query5F/2015",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
-						"Query5F"
+						"Query5F",
+						"2015"
 					]
 				}
 			},
