@@ -229,7 +229,8 @@ class handle {
                 var result = await request.query(command);
                 console.log(result)
                 WriteExcel(colum,result,"Q4C")
-
+                console.log("------------------------------------------");
+                
                 console.log(result.recordset);
 
 
