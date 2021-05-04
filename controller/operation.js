@@ -288,6 +288,7 @@ class handle {
     async Query5A(reg) {
         return new Promise(async function (resolve, reject) {
             try {
+                console.log(reg.year)
                 var request = await new sql.Request();
                 var year = reg.year
                 var command = `SELECT [country], [city], [latitude], [longitude], [Year]
