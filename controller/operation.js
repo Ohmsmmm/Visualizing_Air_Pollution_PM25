@@ -4,7 +4,7 @@ const WriteExcel = require("../util/writeExcel");
 // config for your database
 const config = {
     user: "sa",
-    password: "123456789",
+    password: "Ohmsm55343",
     server: "localhost",
     database: "SpatialDB",
     options: {
