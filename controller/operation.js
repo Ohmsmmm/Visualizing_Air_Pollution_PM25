@@ -4,7 +4,7 @@ const WriteExcel = require("../util/writeExcel");
 // config for your database
 const config = {
     user: "sa",
-    password: "123456789",
+    password: "Ohmsm55343",
     server: "localhost",
     database: "SpatialDB",
     options: {
@@ -388,7 +388,7 @@ class handle {
                 
                 var command = `SELECT MAX([longitude]) AS max_long, MAX([latitude]) AS max_lat, MIN([longitude]) AS min_long, MIN([latitude]) AS min_lat
                 FROM SpatialDB.dbo.AirPollutionPM25
-                WHERE [Year] = '2009' AND [country] = 'Thailand'
+                WHERE [Year] = '2015' AND [country] = 'Thailand'
                 GROUP BY [country], [Year] `;
                 var result = await request.query(command);
                 console.log(result)
@@ -420,7 +420,7 @@ class handle {
                 WHERE [country] in (
                     SELECT top 1 country
                     FROM SpatialDB.dbo.AirPollutionPM25 
-                    WHERE [Year] = 2015
+                    WHERE [Year] = 2011
                     GROUP BY country
                     ORDER BY COUNT(city) DESC) `;
                 var result = await request.query(command);
