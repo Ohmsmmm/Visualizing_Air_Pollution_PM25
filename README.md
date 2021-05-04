@@ -1,3 +1,5 @@
+# for install
+    npm i
 # for start server
     node server.js
 # for front-end
