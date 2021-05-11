@@ -1,0 +1,92 @@
+--4a) List country and city names whose PM 2.5 values are greater than 50 in 2015.
+
+SELECT [country], [city], [Year], [pm25],[geom]
+FROM SpatialDB.dbo.AirPollutionPM25
+WHERE Year = '2015' AND pm25 > 50
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+--4b) Calculate the AVG(PM 2.5) by country (show the results in a decreasing order).
+
+SELECT AVG(pm25) AS pm25AVG,[country]
+FROM SpatialDB.dbo.AirPollutionPM25
+GROUP BY country
+ORDER BY pm25AVG DESC
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+--4c) Given a <country_input> from the user, show a historical PM 2.5 values by year.
+
+SELECT AVG(pm25) AS pm25AVG, [Year]
+FROM SpatialDB.dbo.AirPollutionPM25
+WHERE country = '${country}'
+GROUP BY Year
+ORDER BY Year
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+--4d) Given a <year_input> and an input of <color_pm25> level of health concern from the user, calculate a total of the affected population (in number).
+
+SELECT SUM(population) AS affectedPopulation
+FROM SpatialDB.dbo.AirPollutionPM25
+WHERE year = '${year}' AND color_pm25 = '${color_pm25}'
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+--5a) Given a <year_input> from the user, visualize all the city points of all countries.
+
+SELECT [country], [city], [latitude], [longitude], [Year]
+FROM SpatialDB.dbo.AirPollutionPM25
+WHERE Year = '${year}'
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+--5b) Visualize the 50 closest city points to Bangkok.
+
+DECLARE @Point GEOGRAPHY
+SELECT  @Point = geom
+FROM SpatialDB.dbo.AirPollutionPM25
+WHERE city = 'Bangkok'
+                 
+SELECT DISTINCT TOP 50 [city], [latitude], [longitude], geom.MakeValid().STDistance(@Point) AS Distance
+From SpatialDB.dbo.AirPollutionPM25
+WHERE city != 'Bangkok'
+Order by Distance ASC
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+--5c) Visualize all the city points of Thailand’s neighboring countries in 2018.
+
+SELECT [city], [latitude], [longitude], [country], [Year]
+FROM SpatialDB.dbo.AirPollutionPM25
+WHERE  [country] in (
+	SELECT w1.NAME AS "Neighbors of Thailand"
+	FROM [SpatialDB].[dbo].[world] w1, [SpatialDB].[dbo].[world] w2
+	WHERE w2.geom.MakeValid().STTouches(w1.geom.MakeValid())=1 and w2.NAME = 'Thailand')
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+--5d) Visualize the four points of MBR covering all city points in Thailand in 2009.
+
+SELECT latitude, longitude
+FROM SpatialDB.dbo.AirPollutionPM25
+WHERE 
+latitude = (SELECT MAX(latitude) FROM SpatialDB.dbo.AirPollutionPM25 WHERE [Year] = '2016' AND [country] = 'Thailand')
+OR
+latitude = (SELECT MIN(latitude) FROM SpatialDB.dbo.AirPollutionPM25 WHERE [Year] = '2016' AND [country] = 'Thailand')
+OR
+longitude = (SELECT MAX(longitude) FROM SpatialDB.dbo.AirPollutionPM25 WHERE [Year] = '2016' AND [country] = 'Thailand')
+OR
+longitude = (SELECT MIN(longitude) FROM SpatialDB.dbo.AirPollutionPM25 WHERE [Year] = '2016' AND [country] = 'Thailand')
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+--5e) Visualize all city points of countries having the highest no. of city points in 2011.
+
+SELECT [country], [latitude],[longitude], [country], [city]
+FROM SpatialDB.dbo.AirPollutionPM25
+WHERE [country] in (
+	SELECT top 1 country
+	FROM SpatialDB.dbo.AirPollutionPM25
+	WHERE [Year] = 2011
+	GROUP BY country
+	ORDER BY COUNT(city) DESC)
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+--5f) Given a <year_input> from the user, visualize all the city points which are considered as “low income” (as specified in column wbinc16_text).
+
+SELECT [latitude], [longitude], [country], [city]
+FROM SpatialDB.dbo.AirPollutionPM25
+WHERE wbinc16_text = 'Lower middle income' AND [Year] = '${year}'
